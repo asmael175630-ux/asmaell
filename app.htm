@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>asmael_VIP - نظام الشحن الذكي الجديد</title>
+    <style>
+        :root {
+            --primary: #e60000; /* الأحمر الرسمي */
+            --secondary: #0056b3; /* الأزرق */
+            --dark-bg: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 500px;
+            background-color: var(--card-bg);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            border: 1px solid #2d2d2d;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: var(--primary);
+            font-size: 32px;
+            margin: 0 0 5px 0;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-shadow: 0 0 15px rgba(230, 0, 0, 0.4);
+        }
+
+        .header p {
+            color: #aaa;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .status-box {
+            background-color: #2a2a2a;
+            border-right: 5px solid var(--secondary);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .status-box span {
+            display: block;
+            color: #888;
+        }
+
+        .status-box .highlight {
+            color: #ffb300;
+            font-weight: bold;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #ddd;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 14px;
+            background-color: #252525;
+            border: 1px solid #3d3d3d;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 15px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 8px rgba(0, 86, 179, 0.5);
+        }
+
+        select option {
+            background-color: var(--card-bg);
+            color: #fff;
+        }
+
+        .btn-red {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            background-color: var(--primary);
+            color: #fff;
+            font-size: 18px;
+            box-shadow: 0 5px 15px rgba(230, 0, 0, 0.3);
+        }
+
+        .btn-red:hover {
+            background-color: #b30000;
+            transform: translateY(-1px);
+        }
+
+        .btn-red:active {
+            transform: translateY(1px);
+        }
+
+        #log-output {
+            margin-top: 20px;
+            padding: 12px;
+            background: #000;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 13px;
+            color: #00ff00;
+            max-height: 120px;
+            overflow-y: auto;
+            display: block;
+            border: 1px solid #222;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <div class="header">
+        <h1>asmael_VIP</h1>
+        <p>بوابة الشحن السريع للكروت تلقائياً</p>
+    </div>
+
+    <div class="status-box">
+        <span>حالة الاتصال بالشبكة الخلوية:</span>
+        <div id="connection-status" class="highlight">⏳ جاري فحص الشبكة وسحب التوكن من النظام الجديد...</div>
+    </div>
+
+    <form id="charge-form">
+        <input type="hidden" id="seamlessToken" name="seamlessToken">
+        <input type="hidden" id="myMsisdn" name="myMsisdn">
+
+        <div class="form-group">
+            <label for="product">🎁 اختر نوع الكرت (التفاصيل والأيام والأسعار الجديدة):</label>
+            <select id="product" name="product_id" required>
+                <optgroup label="⚡ كروت الفكة ووحداتها">
+                    <option value="Fakka_2.5_Unite">📱 كارت 2.5 جنيه — 45 وحدة — حتى منتصف الليل</option>
+                    <option value="Fakka_4.25_Unite">📱 كارت 4.25 جنيه — 190 وحدة — حتى منتصف الليل</option>
+                    <option value="Fakka_10.5_Unite">📱 كارت 10.5 جنيه — 400 وحدة — صالح لـ 7 أيام</option>
+                    <option value="Fakka_11.5_Unite">📱 كارت 11.5 جنيه — 450 وحدة — صالح لـ 7 أيام</option>
+                    <option value="Fakka_12.5_Unite">📱 كارت 12.5 جنيه — 425 وحدة — صالح لـ 6 أيام</option>
+                    <option value="Fakka_13.5_Unite">📱 كارت 13.5 جنيه — 625 وحدة — صالح لـ 7 أيام</option>
+                    <option value="Fakka_16.5_Unite">📱 كارت 16.5 جنيه — 425 وحدة — صالح لـ 6 أيام</option>
+                    <option value="Fakka_17.5_Unite">📱 كارت 17.5 جنيه — 650 وحدة — صالح لـ 10 أيام</option>
+                    <option value="Fakka_20_Unite">📱 كارت 20 جنيه — 750 وحدة — صالح لـ 10 أيام</option>
+                </optgroup>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="receiver">📱 رقم الموبايل المراد الشحن له:</label>
+            <input type="tel" id="receiver" name="receiver" placeholder="01xxxxxxxxx" maxlength="11" required>
+        </div>
+
+        <div class="form-group">
+            <label for="pin">🔒 الرقم السري للمحفظة (PIN - مكون من 6 أرقام):</label>
+            <input type="password" id="pin" name="pin" placeholder="••••••" maxlength="6" required>
+        </div>
+
+        <button type="submit" class="btn-red" id="btn-submit" disabled style="opacity: 0.5; cursor: not-allowed;">تأكيد عملية الشحن الآن ⚡</button>
+    </form>
+
+    <div id="log-output"></div>
+</div>
+
+<script>
+    const SERVER_URL = 'http://127.0.0.1:5000'; // رابط السيرفر المحلي
+    const btnSubmit = document.getElementById('btn-submit');
+    const connStatus = document.getElementById('connection-status');
+    const logOutput = document.getElementById('log-output');
+
+    function log(message, color = '#00ff00') {
+        logOutput.innerHTML += `<span style="color: ${color}">> ${message}</span><br>`;
+        logOutput.scrollTop = logOutput.scrollHeight;
+    }
+
+    // دالة السحب التلقائي الفوري والموثق عبر النظام الجديد
+    async function initAutoExtract() {
+        log("🔄 جاري تسجيل الدخول واستخراج البيانات تلقائياً...", "#ffb300");
+
+        try {
+            const response = await fetch(`${SERVER_URL}/api/extract-token`);
+            const data = await response.json();
+
+            if (data.success && data.seamlessToken) {
+                // تخزين التوكن ورقم المرسل الجديد بصيغة الـ 010
+                document.getElementById('seamlessToken').value = data.seamlessToken;
+                document.getElementById('myMsisdn').value = data.msisdn;
+                
+                // تحديث واجهة المستخدم بالرقم المستخرج الجديد
+                connStatus.innerHTML = `✅ الرقم المرسل: <span style="color:#4caf50;">${data.msisdn}</span>`;
+                log(`✅ تم الحصول على التوكن الرقمي بنجاح.`);
+                log(`رقم المحفظة الحالي: ${data.msisdn}`);
+                
+                // تفعيل قفل زر الشحن فوراً
+                btnSubmit.disabled = false;
+                btnSubmit.style.opacity = '1';
+                btnSubmit.style.cursor = 'pointer';
+            } else {
+                throw new Error(data.message || "فشل التوكن");
+            }
+        } catch (error) {
+            connStatus.innerHTML = `<span style="color:#ff5252;">⚠️ فشل الاستخراج التلقائي من النظام الجديد</span>`;
+            log("❌ خطأ: تأكد من تشغيل ملف بايثون الحديث، والاتصال عبر باقة الموبايل وليس الواي فاي.", "#ff5252");
+        }
+    }
+
+    // استدعاء دالة التوكن التلقائي بمجرد فتح الصفحة
+    window.addEventListener('DOMContentLoaded', initAutoExtract);
+
+    // إرسال طلب الشراء النهائي للسيرفر
+    document.getElementById('charge-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const receiver = document.getElementById('receiver').value.trim();
+        const pin = document.getElementById('pin').value.trim();
+
+        if (receiver.length !== 11 || !receiver.startsWith('01')) {
+            log("⚠️ تحذير: الرقم قد لا يكون صحيحاً، سيتم المتابعة.", "#ffb300");
+        }
+
+        if (pin.length !== 6) {
+            log("❌ يجب أن يكون الرقم السري مكون من 6 أرقام فقط.", "#ff5252");
+            return;
+        }
+
+        log("🔄 جاري تنفيذ عملية الشراء وتحديث التوكن...", "#ffb300");
+        btnSubmit.disabled = true;
+        btnSubmit.innerText = "جاري الشراء... ⏳";
+
+        const payload = {
+            seamlessToken: document.getElementById('seamlessToken').value,
+            myMsisdn: document.getElementById('myMsisdn').value,
+            product_id: document.getElementById('product').value,
+            receiver: receiver,
+            pin: pin
+        };
+
+        try {
+            const response = await fetch(`${SERVER_URL}/api/charge`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const result = await response.json();
+
+            if (result.success) {
+                log(`📦 الرد: ${result.message}`, '#4caf50');
+                alert(result.message);
+            } else {
+                log(`❌ فشل الاتصال أو الشراء: ${result.message}`, '#ff5252');
+                alert(`فشل: ${result.message}`);
+            }
+        } catch (error) {
+            log("❌ خطأ: تعذر إرسال الطلب، تأكد من اتصال السيرفر بالشبكة.", "#ff5252");
+        } finally {
+            btnSubmit.disabled = false;
+            btnSubmit.innerText = "تأكيد عملية الشحن الآن ⚡";
+        }
+    });
+</script>
+
+</body>
+</html>
